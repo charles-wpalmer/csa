@@ -1,6 +1,7 @@
 # Defines the app's routes
 # @author Chris Loftus
 Rails.application.routes.draw do
+  resources :posts
   resources :users do
     # We add a special route to support the search field
     get 'search', on: :collection
