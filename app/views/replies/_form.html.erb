@@ -1,0 +1,47 @@
+<%= form_with(model: reply, local: true) do |form| %>
+  <% if reply.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reply.errors.count, "error") %> prohibited this reply from being saved:</h2>
+
+      <ul>
+      <% reply.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :author %>
+    <%= form.number_field :author, id: :reply_author %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.time_select :date, id: :reply_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :under %>
+    <%= form.number_field :under, id: :reply_under %>
+  </div>
+
+  <div class="field">
+    <%= form.label :thread %>
+    <%= form.number_field :thread, id: :reply_thread %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :reply_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :text %>
+    <%= form.text_area :text, id: :reply_text %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
