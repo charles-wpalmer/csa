@@ -6,7 +6,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.integer :post_count
       t.string :title
       t.text :text
-
+      t.anonymous :boolean
       t.timestamps
     end
   end

@@ -12,26 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :id %>
-    <%= form.number_field :id, id: :post_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :author %>
-    <%= form.number_field :author, id: :post_author %>
-  </div>
-
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.time_select :date, id: :post_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :post_count %>
-    <%= form.number_field :post_count, id: :post_post_count %>
-  </div>
-
-  <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, id: :post_title %>
   </div>
@@ -40,6 +20,11 @@
     <%= form.label :text %>
     <%= form.text_area :text, id: :post_text %>
   </div>
+
+    <div class="anonymous">
+      <%= form.label :anonymous_post %>
+      <%= form.check_box :anonymous %>
+    </div>
 
   <div class="actions">
     <%= form.submit %>

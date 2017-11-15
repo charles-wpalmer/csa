@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113152447) do
+ActiveRecord::Schema.define(version: 20171115114234) do
 
   create_table "broadcasts", force: :cascade do |t|
     t.text "content"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20171113152447) do
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "anonymous"
   end
 
   create_table "replies", force: :cascade do |t|
