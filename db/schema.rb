@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115114234) do
+ActiveRecord::Schema.define(version: 20171116153319) do
 
   create_table "broadcasts", force: :cascade do |t|
     t.text "content"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20171115114234) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "author"
-    t.time "date"
     t.integer "post_count"
     t.string "title"
     t.text "text"

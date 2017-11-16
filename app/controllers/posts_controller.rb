@@ -29,10 +29,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     @post.post_count = 0
-    @post.date = DateTime.now
     @post.author = User.find(current_user.user_id).id
-
-    #abort(@post.inspect)
 
     respond_to do |format|
       if @post.save
