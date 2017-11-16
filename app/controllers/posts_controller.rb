@@ -30,8 +30,10 @@ class PostsController < ApplicationController
 
     @post.post_count = 0
     @post.date = DateTime.now
+    @post.author = User.find(current_user.user_id).id
 
-    abort(@post.inspect)
+    #abort(@post.inspect)
+
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
