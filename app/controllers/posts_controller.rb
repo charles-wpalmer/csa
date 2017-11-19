@@ -1,17 +1,16 @@
-require 'date'
-
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order("created_at DESC")
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @replies = Reply.get_by_post_id(params[:id])
   end
 
   # GET /posts/new
@@ -27,9 +26,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-
+    @post.user_id = current_user.id
     @post.post_count = 0
-    @post.author = User.find(current_user.user_id).id
 
     respond_to do |format|
       if @post.save
@@ -74,6 +72,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:id, :author, :date, :post_count, :title, :text, :anonymous)
+      params.require(:post).permit(:user_id, :post_count, :title, :text, :anonymous)
     end
 end

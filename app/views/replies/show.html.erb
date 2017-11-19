@@ -1,23 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Author:</strong>
-  <%= @reply.author %>
+  <strong>User:</strong>
+  <%= @reply.user.firstname + " " + @reply.user.surname %>
 </p>
 
 <p>
-  <strong>Date:</strong>
-  <%= @reply.date %>
+  <strong>Parent:</strong>
+  <%= @reply.parent.title %>
 </p>
 
 <p>
-  <strong>Under:</strong>
-  <%= @reply.under %>
-</p>
-
-<p>
-  <strong>Thread:</strong>
-  <%= @reply.thread %>
+  <strong>Post:</strong>
+  <%= @reply.post.title %>
 </p>
 
 <p>

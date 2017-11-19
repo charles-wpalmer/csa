@@ -1,17 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 1
-  author: 1
-  date: 2017-11-13 15:10:26
+  user: one
   post_count: 1
   title: MyString
   text: MyText
+  anonymous: false
 
 two:
-  id: 1
-  author: 1
-  date: 2017-11-13 15:10:26
+  user: two
   post_count: 1
   title: MyString
   text: MyText
+  anonymous: false

@@ -1,18 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Id:</strong>
-  <%= @post.id %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @post.author %>
-</p>
-
-<p>
-  <strong>Date Created:</strong>
-  <%= @post.created_at %>
+  <strong>User:</strong>
+  <%= @post.user %>
 </p>
 
 <p>
@@ -35,5 +25,37 @@
   <%= @post.anonymous %>
 </p>
 
+<table>
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Parent</th>
+    <th>Post</th>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @replies.each do |reply| %>
+      <tr>
+        <td><%= reply.user.firstname + " " + reply.user.surname %></td>
+        <% if reply.parent %>
+            <td><%= reply.parent.title %></td>
+        <% else %>
+            <td> -- </td>
+        <% end %>
+        <td><%= reply.post.title %></td>
+        <td><%= reply.title %></td>
+        <td><%= reply.text %></td>
+        <td><%= link_to 'Reply', new_reply_path + "/post/#{@post.id}/reply/#{reply.id}"%></td>
+        <td><%= build_replies(reply.responses, @post.id, '') %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Reply', new_reply_path + "/post/#{@post.id}"%> |
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>

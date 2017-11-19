@@ -21,10 +21,10 @@
     <%= form.text_area :text, id: :post_text %>
   </div>
 
-    <div class="anonymous">
-      <%= form.label :anonymous_post %>
-      <%= form.check_box :anonymous %>
-    </div>
+  <div class="field">
+    <%= form.label :anonymous %>
+    <%= form.check_box :anonymous, id: :post_anonymous %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

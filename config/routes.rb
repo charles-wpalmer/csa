@@ -3,6 +3,12 @@
 Rails.application.routes.draw do
   resources :replies
   resources :posts
+
+  get 'replies/new/post/:post_id', to: 'replies#new'
+  post 'replies/new/post/:post_id', to: 'replies#create'
+  get 'replies/new/post/:post_id/reply/:parent_id', to: 'replies#new'
+  post 'replies/new/post/:post_id/reply/:parent_id', to: 'replies#create'
+
   resources :users do
     # We add a special route to support the search field
     get 'search', on: :collection

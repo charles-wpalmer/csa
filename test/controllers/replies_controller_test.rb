@@ -17,7 +17,7 @@ class RepliesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create reply" do
     assert_difference('Reply.count') do
-      post replies_url, params: { reply: { author: @reply.author, date: @reply.date, text: @reply.text, thread: @reply.thread, title: @reply.title, under: @reply.under } }
+      post replies_url, params: { reply: { parent: @reply.parent, post_id: @reply.post_id, text: @reply.text, title: @reply.title, user_id: @reply.user_id } }
     end
 
     assert_redirected_to reply_url(Reply.last)
@@ -34,7 +34,7 @@ class RepliesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update reply" do
-    patch reply_url(@reply), params: { reply: { author: @reply.author, date: @reply.date, text: @reply.text, thread: @reply.thread, title: @reply.title, under: @reply.under } }
+    patch reply_url(@reply), params: { reply: { parent: @reply.parent, post_id: @reply.post_id, text: @reply.text, title: @reply.title, user_id: @reply.user_id } }
     assert_redirected_to reply_url(@reply)
   end
 

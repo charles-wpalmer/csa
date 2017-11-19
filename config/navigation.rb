@@ -95,7 +95,8 @@ SimpleNavigation::Configuration.run do |navigation|
                  highlights_on: /\/broadcasts/,
                  if: Proc.new {is_admin?}
     primary.item :posts, 'Forum', posts_path,
-                 highlights_on: /\/posts/
+                 highlights_on: /\/posts/,
+                 if: Proc.new {current_user}
     # Add an item which has a sub navigation (same params, but with block)
     #primary.item :key_2, 'name', url, options do |sub_nav|
     # Add an item to the sub navigation (same params again)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116153319) do
+ActiveRecord::Schema.define(version: 20171116234820) do
 
   create_table "broadcasts", force: :cascade do |t|
     t.text "content"
@@ -43,24 +43,27 @@ ActiveRecord::Schema.define(version: 20171116153319) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "author"
+    t.integer "user_id"
     t.integer "post_count"
     t.string "title"
     t.text "text"
+    t.boolean "anonymous"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "anonymous"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
-    t.integer "author"
-    t.time "date"
-    t.integer "under"
-    t.integer "thread"
+    t.integer "user_id"
+    t.integer "parent_id"
+    t.integer "post_id"
     t.string "title"
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_replies_on_parent_id"
+    t.index ["post_id"], name: "index_replies_on_post_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "user_details", force: :cascade do |t|

@@ -5,10 +5,9 @@
 <table>
   <thead>
     <tr>
-      <th>Author</th>
-      <th>Date</th>
-      <th>Under</th>
-      <th>Thread</th>
+      <th>User</th>
+      <th>Parent</th>
+      <th>Post</th>
       <th>Title</th>
       <th>Text</th>
       <th colspan="3"></th>
@@ -18,10 +17,13 @@
   <tbody>
     <% @replies.each do |reply| %>
       <tr>
-        <td><%= reply.author %></td>
-        <td><%= reply.date %></td>
-        <td><%= reply.under %></td>
-        <td><%= reply.thread %></td>
+        <td><%= reply.user.firstname + " " + reply.user.surname %></td>
+        <% if reply.parent %>
+          <td><%= reply.parent.title %></td>
+        <% else %>
+            <td> -- </td>
+        <% end %>
+        <td><%= reply.post.title %></td>
         <td><%= reply.title %></td>
         <td><%= reply.text %></td>
         <td><%= link_to 'Show', reply %></td>

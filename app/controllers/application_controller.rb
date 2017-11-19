@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
   # Get the last 20 notifications for display on all pages when logged in
   before_action :get_notifications
 
+
+  def get_user_name(id)
+    User.find(@id).firstname
+  end
+
   def login_required
     logged_in? || access_denied
   end

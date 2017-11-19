@@ -26,6 +26,12 @@ class RepliesController < ApplicationController
   def create
     @reply = Reply.new(reply_params)
 
+    @reply.user_id = current_user.id
+
+    if(@reply.parent_id == nil)
+      @reply.parent_id = 0
+    end
+
     respond_to do |format|
       if @reply.save
         format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
@@ -69,6 +75,6 @@ class RepliesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reply_params
-      params.require(:reply).permit(:author, :date, :under, :thread, :title, :text)
+      params.require(:reply).permit(:user_id, :parent_id, :post_id, :title, :text)
     end
 end
