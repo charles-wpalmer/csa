@@ -7,6 +7,9 @@ class Reply < ApplicationRecord
 
   belongs_to :parent, class_name: "Reply", optional: true
 
+  validates_presence_of :text
+  validates_presence_of :title
+
   # Need to have a function to get all the replies with
   # a given post_id
 

@@ -1,11 +1,10 @@
-<br>
-<div class="response">
 <p id="notice"><%= notice %></p>
+<br>
 
+<div class="response">
 <p>
   <%= @post.user.firstname + " " + @post.user.surname%>
 </p>
-
 <p>
   <strong><%= @post.title %></strong>
 </p>
@@ -13,6 +12,7 @@
 <p>
   <%= @post.text %>
 </p>
+<br>
 <%= link_to 'Reply', new_reply_path + "/post/#{@post.id}"%>
 </div>
 
@@ -20,7 +20,9 @@
     <div class="response">
       <p><%= reply.user.firstname + " " + reply.user.surname %></p>
       <p><strong><%= reply.title %></strong></p>
+      <br>
       <p><%= reply.text %></p>
+      <br>
       <p><%= link_to 'Reply', new_reply_path + "/post/#{@post.id}/reply/#{reply.id}"%></p>
     </div>
 

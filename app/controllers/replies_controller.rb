@@ -15,6 +15,15 @@ class RepliesController < ApplicationController
   # GET /replies/new
   def new
     @reply = Reply.new
+
+    # Get the title of the parent reply, as by default
+    # should be the same, but can be changed
+    if(params[:parent_id])
+      parent = params[:parent_id]
+
+      @reply.title = Reply.find(parent).title
+    end
+
   end
 
   # GET /replies/1/edit
@@ -34,7 +43,7 @@ class RepliesController < ApplicationController
 
     respond_to do |format|
       if @reply.save
-        format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
+        format.html { redirect_to "/posts/#{@reply.post_id}", notice: 'Reply was successfully created.' }
         format.json { render :show, status: :created, location: @reply }
       else
         format.html { render :new }
