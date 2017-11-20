@@ -37,12 +37,16 @@ class RepliesController < ApplicationController
 
     @reply.user_id = current_user.id
 
+    # If no Parent reply, make the value 0
     if(@reply.parent_id == nil)
       @reply.parent_id = 0
     end
 
     respond_to do |format|
       if @reply.save
+
+        # Add 1 to the post count
+        Post.add_to_post_count(@reply.post_id)
         format.html { redirect_to "/posts/#{@reply.post_id}", notice: 'Reply was successfully created.' }
         format.json { render :show, status: :created, location: @reply }
       else
