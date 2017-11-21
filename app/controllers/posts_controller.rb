@@ -57,10 +57,26 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+
+    # Double make sure the logged in user is the author before deleting,
+    # should never be due to hiding delete button for other users
+    if current_user.id == @post.user_id
+
+      # Delete all the associated replies
+      Reply.delete_by_post(@post.id)
+
+      @post.destroy
+
+      respond_to do |format|
+        format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+
+    else
+      respond_to do |format|
+        format.html { redirect_to posts_url, notice: 'Only the author can delete the post.' }
+        format.json { head :no_content }
+      end
     end
   end
 

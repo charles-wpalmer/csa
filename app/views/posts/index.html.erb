@@ -26,9 +26,10 @@
         <td><%= post.title %></td>
         <td><%= post.post_count %></td>
         <td> TODO: unread posts </td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View Replies', post %></td>
+        <% if current_user.id == post.user_id %>
+            <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

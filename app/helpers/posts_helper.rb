@@ -2,7 +2,9 @@ module PostsHelper
 
   # function to handle the recursive building of
   # replies
-  def build_replies(responses, post, html = '', indent = 5)
+  def build_replies(responses, post, indent = 3)
+
+    html = ''
 
     # For each of the responses in the collection build the html for it
     responses.each do |response|
@@ -20,9 +22,8 @@ module PostsHelper
 
       # If this reply has responses, reccursivley call this function
       # to keep building html
-      if(response.responses)
-        indent = indent + 5
-        html = build_replies(response.responses, post, html, indent)
+      if response.responses.count > 0
+        html = html + build_replies(response.responses, post, indent + 3)
       end
     end
 
