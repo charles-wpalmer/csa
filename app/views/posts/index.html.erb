@@ -22,13 +22,13 @@
         <% else %>
             <td><%= post.user.firstname %></td>
         <% end %>
-        <td><%= post.created_at %></td>
+        <td><%= display_date(post.created_at) %></td>
         <td><%= post.title %></td>
         <td><%= post.post_count %></td>
         <td> TODO: unread posts </td>
-        <td><%= link_to 'View Replies', post %></td>
+        <td><%= link_to 'View Replies', post_path(post, page: @posts.current_page) %></td>
         <% if current_user.id == post.user_id %>
-            <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Destroy', post_path(post, page: @posts.current_page), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
@@ -36,5 +36,12 @@
 </table>
 
 <br>
+
+<div class="digg_pagination">
+  <div>
+    <%= page_entries_info @posts %>
+  </div>
+  <%= will_paginate @posts, container: false %>
+</div>
 
 <%= link_to 'Create Thread', new_post_path %>

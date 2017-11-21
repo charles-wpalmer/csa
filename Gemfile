@@ -9,6 +9,7 @@ gem 'simple-navigation'
 gem 'will_paginate'
 gem 'paperclip'
 gem 'oauth'
+gem 'will_paginate'
 
 gem 'json'
 gem 'rest-client'

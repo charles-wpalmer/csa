@@ -1,10 +1,13 @@
 class PostsController < ApplicationController
+  before_action :set_current_page, except: [:index]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.order("created_at DESC")
+    @posts = Post.paginate(page: params[:page],
+                  per_page: params[:per_page])
+        .order("created_at DESC")
   end
 
   # GET /posts/1
@@ -62,9 +65,8 @@ class PostsController < ApplicationController
     # should never be due to hiding delete button for other users
     if current_user.id == @post.user_id
 
-      # Delete all the associated replies
-      Reply.delete_by_post(@post.id)
-
+      # Delete all the associated replies, then the post
+      @post.replies.destroy_all
       @post.destroy
 
       respond_to do |format|
@@ -78,6 +80,11 @@ class PostsController < ApplicationController
         format.json { head :no_content }
       end
     end
+  end
+
+  # Set the current page for pagination
+  def set_current_page
+    @current_page = params[:page] || 1
   end
 
   private

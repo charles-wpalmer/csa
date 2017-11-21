@@ -1,3 +1,5 @@
+require 'date'
+
 module PostsHelper
 
   # function to handle the recursive building of
@@ -28,5 +30,10 @@ module PostsHelper
     end
 
     html.html_safe
+  end
+
+  # Convert the time to something a bit more readable
+  def display_date(date)
+    date.to_formatted_s(:short)
   end
 end

@@ -12,12 +12,7 @@ class Reply < ApplicationRecord
 
   # Need to have a function to get all the replies with
   # a given post_id
-
   def self.get_by_post_id(id)
     Reply.where(post_id: id, parent_id: 0)
-  end
-
-  def self.delete_by_post(post)
-    Reply.where(post_id: post).destroy_all
   end
 end
