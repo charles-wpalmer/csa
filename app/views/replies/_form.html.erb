@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+    <%= hidden_field_tag 'page', @current_page %>
+
   <div class="field">
     <% if @reply.parent_id %>
         <%= form.hidden_field :parent_id, id: :parent_id, :value => @reply.parent_id %>
@@ -20,7 +22,7 @@
   </div>
 
   <div class="field">
-    <% if @reply.parent_id %>
+    <% if @reply.post_id %>
         <%= form.hidden_field :post_id, id: :reply_post_id, :value => @reply.post_id %>
     <% else %>
         <%= form.hidden_field :post_id, id: :reply_post_id, :value => params[:post_id] %>

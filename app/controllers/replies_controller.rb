@@ -45,9 +45,13 @@ class RepliesController < ApplicationController
     respond_to do |format|
       if @reply.save
 
+        @post = Post.find(@reply.post_id)
+
         # Add 1 to the post count
         Post.add_to_post_count(@reply.post_id)
-        format.html { redirect_to "/posts/#{@reply.post_id}", notice: 'Reply was successfully created.' }
+
+        format.html {redirect_to(post_url(@post, page: @current_page),
+                                 notice: 'Reply was successfully created.')}
         format.json { render :show, status: :created, location: @reply }
       else
         format.html { render :new }

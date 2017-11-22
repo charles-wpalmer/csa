@@ -44,4 +44,4 @@
   <%= will_paginate @posts, container: false %>
 </div>
 
-<%= link_to 'Create Thread', new_post_path %>
+<%= link_to 'Create Thread', new_post_path(page: @posts.current_page) %>

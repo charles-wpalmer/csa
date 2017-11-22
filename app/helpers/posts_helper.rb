@@ -15,10 +15,8 @@ module PostsHelper
       html = html + "<p><strong>#{response.title}</strong></p><br>"
       html = html + "<p>#{response.text}</p><br>"
 
-      # Pre build the url - seperate it out of line below
-      url = "/post/#{post}/reply/#{response.id}"
-
-      html = html + "<p>  #{link_to 'Reply', new_reply_path + url}</p>"
+      html = html + "<p>  #{link_to('Reply', new_reply_path + post_path(@post) +
+                                reply_path(response))}</p>"
 
       html = html + "</div>"
 
