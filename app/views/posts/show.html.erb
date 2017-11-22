@@ -2,23 +2,27 @@
 <br>
 
 <div class="response">
-<p>
-  <%= @post.user.firstname + " " + @post.user.surname%>
-</p>
-<p>
-  <strong><%= @post.title %></strong>
-</p>
-<br>
-<p>
-  <%= @post.text %>
-</p>
-<br>
-<%= link_to 'Reply', new_reply_path + post_path(@post) %>
+  <p>
+    <%= @post.user.firstname + " " + @post.user.surname%>
+  </p>
+  <p>
+    <%= display_date(@post.created_at) %>
+  </p>
+  <p>
+    <strong><%= @post.title %></strong>
+  </p>
+  <br>
+  <p>
+    <%= @post.text %>
+  </p>
+  <br>
+  <%= link_to 'Reply', new_reply_path + post_path(@post) %>
 </div>
 
   <% @replies.each do |reply| %>
     <div class="response">
       <p><%= reply.user.firstname + " " + reply.user.surname %></p>
+      <p><%= display_date(reply.created_at) %></p>
       <p><strong><%= reply.title %></strong></p>
       <br>
       <p><%= reply.text %></p>

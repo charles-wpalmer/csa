@@ -12,6 +12,7 @@ module PostsHelper
     responses.each do |response|
       html = html + "<div style='margin-left:#{indent}%;' class='response'>"
       html = html + "<p>#{response.user.firstname + " " + response.user.surname }  </p>"
+      html = html + "<p> #{display_date(@post.created_at)} </p>"
       html = html + "<p><strong>#{response.title}</strong></p><br>"
       html = html + "<p>#{response.text}</p><br>"
 
