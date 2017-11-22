@@ -4,7 +4,7 @@ module PostsHelper
 
   # function to handle the recursive building of
   # replies
-  def build_replies(responses, post, indent = 3)
+  def build_replies(responses, post, indent = 4)
 
     html = ''
 
@@ -23,7 +23,7 @@ module PostsHelper
       # If this reply has responses, reccursivley call this function
       # to keep building html
       if response.responses.count > 0
-        html = html + build_replies(response.responses, post, indent + 3)
+        html = html + build_replies(response.responses, post, indent + 4)
       end
     end
 
