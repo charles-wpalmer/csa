@@ -2,6 +2,54 @@ require 'date'
 
 module PostsHelper
 
+  # list of the unread posts.
+  @unread_replies
+
+  # The current post
+  @current_post
+
+  # Function to check if a post is unread
+  def check_unread(reply)
+
+    found = ''
+    @unread_replies.each do |r|
+      if reply.id == r.id
+        found = "<strong>Unread</strong>"
+      end
+    end
+     found.html_safe
+  end
+
+  def mark_as_read(post)
+
+    # Set the post
+    @current_post = post
+
+    # Record the user visiting this post, to keep track of unread posts
+    UnreadPost.update_record(@current_post, current_user.id)
+  end
+
+  # Function to calculate amount of unread posts
+  def unread_posts(post)
+
+    # Get the last known access of the user for this post
+    unread = UnreadPost.where(post_id: post, user_id: current_user.id)
+
+    # If there is no last access recorded, assume all are unread, else, get the amount
+    # of posts created after the date of last access, and count them
+    if unread.count == 0
+      @unread_replies = Reply.where(post_id: post)
+    else
+      @unread_replies = Reply.where('created_at > ? AND post_id = ? AND user_id != ?',
+                            unread[0].updated_at.to_s,
+                            post,
+                            current_user.id
+      )
+    end
+
+    @unread_replies.count
+  end
+
   # function to handle the recursive building of
   # replies
   def build_replies(responses, post, indent = 4)
@@ -12,6 +60,7 @@ module PostsHelper
     responses.each do |response|
       html = html + "<div style='margin-left:#{indent}%;' class='response'>"
       html = html + "<p>#{response.user.firstname + " " + response.user.surname }  </p>"
+      html = html + check_unread(response)
       html = html + "<p> #{display_date(@post.created_at)} </p>"
       html = html + "<p><strong>#{response.title}</strong></p><br>"
       html = html + "<p>#{response.text}</p><br>"

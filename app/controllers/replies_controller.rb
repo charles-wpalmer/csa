@@ -45,6 +45,10 @@ class RepliesController < ApplicationController
     respond_to do |format|
       if @reply.save
 
+        # Update the last seen date of the unread_posts record, to prevent this
+        # reply being counted as 'unseen'
+        UnreadPost.update_record(@reply.id, current_user.id)
+
         @post = Post.find(@reply.post_id)
 
         # Add 1 to the post count

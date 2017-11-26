@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Unread Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Post</th>
+      <th>Unread</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @unread_posts.each do |unread_post| %>
+      <tr>
+        <td><%= unread_post.user %></td>
+        <td><%= unread_post.post %></td>
+        <td><%= unread_post.unread %></td>
+        <td><%= link_to 'Show', unread_post %></td>
+        <td><%= link_to 'Edit', edit_unread_post_path(unread_post) %></td>
+        <td><%= link_to 'Destroy', unread_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Unread Post', new_unread_post_path %>

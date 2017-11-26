@@ -1,7 +1,10 @@
 class Post < ApplicationRecord
   belongs_to :user
-
+  has_many :unread_posts
   has_many :replies
+
+  validates_presence_of :text
+  validates_presence_of :title
 
   self.per_page = 8
 

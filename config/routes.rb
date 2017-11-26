@@ -1,6 +1,7 @@
 # Defines the app's routes
 # @author Chris Loftus
 Rails.application.routes.draw do
+  resources :unread_posts
   resources :replies
   resources :posts
 

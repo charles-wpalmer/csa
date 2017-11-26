@@ -1,0 +1,32 @@
+<%= form_with(model: unread_post, local: true) do |form| %>
+  <% if unread_post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(unread_post.errors.count, "error") %> prohibited this unread_post from being saved:</h2>
+
+      <ul>
+      <% unread_post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, id: :unread_post_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :post_id %>
+    <%= form.text_field :post_id, id: :unread_post_post_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :unread %>
+    <%= form.number_field :unread, id: :unread_post_unread %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
