@@ -10,8 +10,9 @@ class Reply < ApplicationRecord
   validates_presence_of :text
   validates_presence_of :title
 
-  # Need to have a function to get all the replies with
-  # a given post_id
+  # Function to get all the replies by
+  # a given post_id, and where they are
+  # the top level reply
   def self.get_by_post_id(id)
     Reply.where(post_id: id, parent_id: 0)
   end

@@ -31,7 +31,6 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
-    @post.post_count = 0
 
     respond_to do |format|
       if @post.save

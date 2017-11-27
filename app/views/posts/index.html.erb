@@ -24,7 +24,7 @@
         <% end %>
         <td><%= display_date(post.created_at) %></td>
         <td><%= post.title %></td>
-        <td><%= post.post_count %></td>
+        <td><%= post.replies.count.to_s %></td>
         <td><%= unread_posts(post.id) %> </td>
         <td><%= link_to 'View Replies', post_path(post, page: @posts.current_page) %></td>
         <% if current_user.id == post.user_id %>

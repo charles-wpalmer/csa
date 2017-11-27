@@ -84,4 +84,5 @@ module PostsHelper
   def display_date(date)
     date.to_formatted_s(:short)
   end
+
 end
