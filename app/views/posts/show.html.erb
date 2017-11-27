@@ -22,18 +22,19 @@
 </div>
 
   <% @replies.each do |reply| %>
-    <div class="response">
-      <p><%= reply.user.firstname + " " + reply.user.surname %></p>
-      <%= check_unread(reply) %>
-
-
-      <p><%= display_date(reply.created_at) %></p>
-      <p><strong><%= reply.title %></strong></p>
-      <br>
-      <p><%= reply.text %></p>
-      <br>
-      <p><%= link_to 'Reply', new_reply_path + post_path(@post) + reply_path(reply) %></p>
-    </div>
+    <% if check_unread(reply) %>
+        <div class="response-unread">
+    <% else %>
+        <div class="response">
+    <% end %>
+          <p><%= reply.user.firstname + " " + reply.user.surname %></p>
+          <p><%= display_date(reply.created_at) %></p>
+          <p><strong><%= reply.title %></strong></p>
+          <br>
+          <p><%= reply.text %></p>
+          <br>
+          <p><%= link_to 'Reply', new_reply_path + post_path(@post) + reply_path(reply) %></p>
+        </div>
     <%= build_replies(reply.responses, @post.id) %>
 
   <% end %>

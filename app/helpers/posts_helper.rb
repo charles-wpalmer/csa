@@ -10,14 +10,14 @@ module PostsHelper
 
   # Function to check if a post is unread
   def check_unread(reply)
+    found = false
 
-    found = ''
     @unread_replies.each do |r|
       if reply.id == r.id
-        found = "<strong>Unread</strong>"
+        found = true
       end
     end
-     found.html_safe
+     found
   end
 
   def mark_as_read(post)
@@ -58,9 +58,13 @@ module PostsHelper
 
     # For each of the responses in the collection build the html for it
     responses.each do |response|
-      html = html + "<div style='margin-left:#{indent}%;' class='response'>"
+      if check_unread(response)
+        html = html + "<div style='margin-left:#{indent}%;' class='response-unread'>"
+      else
+        html = html + "<div style='margin-left:#{indent}%;' class='response'>"
+      end
+
       html = html + "<p>#{response.user.firstname + " " + response.user.surname }  </p>"
-      html = html + check_unread(response)
       html = html + "<p> #{display_date(@post.created_at)} </p>"
       html = html + "<p><strong>#{response.title}</strong></p><br>"
       html = html + "<p>#{response.text}</p><br>"
