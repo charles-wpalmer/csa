@@ -67,12 +67,6 @@ class PostsController < ApplicationController
     # should never be due to hiding delete button for other users
     if current_user.id == @post.user_id
 
-      # Delete all the associated replies
-      @post.replies.destroy_all
-
-      # Delete all associated unread_posts
-      @post.unread_posts.destroy_all
-
       # Delete the post
       @post.destroy
 

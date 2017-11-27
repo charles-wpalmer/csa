@@ -25,7 +25,9 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_detail
 
   has_many :broadcasts
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :replies, dependent: :destroy
+  has_many :unread_posts, dependent: :destroy
   
   def firstname=(value)
     write_attribute :firstname, (value ? value.humanize : nil)
