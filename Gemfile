@@ -15,7 +15,7 @@ gem 'json'
 gem 'rest-client'
 
 # Add postgres gem (for use on heroku)
-gen 'pg', group: :production
+gem 'pg', group: :production
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0'
