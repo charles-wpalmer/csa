@@ -1,3 +1,4 @@
+ruby '2,4,1'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -14,14 +15,17 @@ gem 'will_paginate'
 gem 'json'
 gem 'rest-client'
 
+# Add postgres gem (for use on heroku)
+gen 'pg', group: :production
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use sqlite3 as the database for Active Record 
+# when run locally (not on heroku)
+gem 'sqlite3', group: :development
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
