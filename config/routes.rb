@@ -1,8 +1,14 @@
 # Defines the app's routes
 # @author Chris Loftus
 Rails.application.routes.draw do
-  resources :unread_posts
+
+  # Only need to create unread_posts record
+  resources :unread_posts, only: [:new, :create]
+
+  # Same for replies, however need a path to a reply
   resources :replies, only: [:new, :create, :show]
+
+  # Need all for posts
   resources :posts
 
   # Remap URLS for creating replies, to keep opaque URI's
@@ -10,7 +16,7 @@ Rails.application.routes.draw do
   get 'posts/:post_id/replies/new/replies/:parent_id', to: 'replies#new'
   post 'posts/:post_id/replies/new/replies/:parent_id', to: 'replies#create'
 
-
+  # Maps replies to posts, to autogenerate the URLS
   resources :posts do
     resources :replies, :only=>[:new, :create, :show]
   end
