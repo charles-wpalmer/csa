@@ -18,22 +18,24 @@
     <%= @post.text %>
   </p>
   <br>
-  <%= link_to 'Reply', new_reply_path + post_path(@post) %>
+  <%= link_to 'Reply', new_post_reply_path(@post.id) %>
 </div>
 
   <% @replies.each do |reply| %>
-    <% if check_unread(reply) %>
-        <div class="response-unread">
-    <% else %>
-        <div class="response">
-    <% end %>
+    <% if check_unread(reply)
+        @post_class = "response-unread"
+       else
+        @post_class = "response"
+       end %>
+
+        <div class="<%= @post_class %>">
           <p><%= reply.user.firstname + " " + reply.user.surname %></p>
           <p><%= display_date(reply.created_at) %></p>
           <p><strong><%= reply.title %></strong></p>
           <br>
           <p><%= reply.text %></p>
           <br>
-          <p><%= link_to 'Reply', new_reply_path + post_path(@post) + reply_path(reply) %></p>
+          <%= link_to('Reply', new_post_reply_path(@post) + reply_path(reply)) %>
         </div>
     <%= build_replies(reply.responses, @post.id) %>
 

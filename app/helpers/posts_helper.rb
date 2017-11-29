@@ -69,8 +69,7 @@ module PostsHelper
       html = html + "<p><strong>#{response.title}</strong></p><br>"
       html = html + "<p>#{response.text}</p><br>"
 
-      html = html + "<p>  #{link_to('Reply', new_reply_path + post_path(@post) +
-                                reply_path(response))}</p>"
+      html = html + "<p>  #{link_to 'Reply', new_post_reply_path(@post.id) + reply_path(response) } </p>"
 
       html = html + "</div>"
 

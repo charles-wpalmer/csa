@@ -2,13 +2,18 @@
 # @author Chris Loftus
 Rails.application.routes.draw do
   resources :unread_posts
-  resources :replies
+  resources :replies, only: [:new, :create, :show]
   resources :posts
 
-  get 'replies/new/posts/:post_id', to: 'replies#new'
-  post 'replies/new/posts/:post_id', to: 'replies#create'
-  get 'replies/new/posts/:post_id/replies/:parent_id', to: 'replies#new'
-  post 'replies/new/posts/:post_id/replies/:parent_id', to: 'replies#create'
+  # Remap URLS for creating replies, to keep opaque URI's
+  # When a reply has a post_id, and a parent_id
+  get 'posts/:post_id/replies/new/replies/:parent_id', to: 'replies#new'
+  post 'posts/:post_id/replies/new/replies/:parent_id', to: 'replies#create'
+
+
+  resources :posts do
+    resources :replies, :only=>[:new, :create, :show]
+  end
 
   resources :users do
     # We add a special route to support the search field
