@@ -33,17 +33,27 @@ module PostsHelper
   def unread_posts(post)
 
     # Get the last known access of the user for this post
-    unread = UnreadPost.where(post_id: post, user_id: current_user.id)
+    unread = UnreadPost.where(post_id: post.id, user_id: current_user.id)
 
     # If there is no last access recorded, assume all are unread, else, get the amount
     # of posts created after the date of last access, and count them
     if unread.count == 0
-      @unread_replies = Reply.where(post_id: post)
+      @unread_replies = Reply.where(post_id: post.id)
+
+      # Plus one, as the post is unread
+      count = @unread_replies.count + 1
     else
-      @unread_replies = Reply.get_last_access(post, unread[0].updated_at, current_user.id)
+      @unread_replies = Reply.get_last_access(post.id, unread[0].updated_at, current_user.id)
+
+      count = @unread_replies.count
+
+      # If the user hasn't seen the post, add one to unread
+      if post.created_at > unread[0].updated_at
+        count = count + 1
+      end
     end
 
-    @unread_replies.count
+    count
   end
 
   # function to handle the recursive building of

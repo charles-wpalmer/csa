@@ -18,14 +18,14 @@
     <% @posts.each do |post| %>
       <tr class="data">
         <% if post.anonymous %>
-            <td class="user">Anonymous</td>
+            <td class="user">anonymous</td>
         <% else %>
             <td class="user"><%= post.user.firstname %></td>
         <% end %>
         <td class="date"><%= display_date(post.created_at) %></td>
         <td class="title"><%= link_to post.title, post_path(post, page: @posts.current_page) %></td>
         <td class="post_count"><%= post.replies.count + 1 %></td>
-        <td class="unread_posts"><%= unread_posts(post.id) %> </td>
+        <td class="unread_posts"><%= unread_posts(post) %> </td>
 
         <% if current_user.id == post.user_id %>
             <td><%= link_to 'Destroy', post_path(post, page: @posts.current_page), method: :delete, data: { confirm: 'Are you sure?' } %></td>
