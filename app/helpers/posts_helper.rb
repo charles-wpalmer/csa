@@ -20,6 +20,8 @@ module PostsHelper
      found
   end
 
+  # Function to update when the user has read this post
+  # and replies
   def mark_as_read(post)
 
     # Set the post
@@ -40,11 +42,7 @@ module PostsHelper
     if unread.count == 0
       @unread_replies = Reply.where(post_id: post)
     else
-      @unread_replies = Reply.where('created_at > ? AND post_id = ? AND user_id != ?',
-                            unread[0].updated_at.to_s,
-                            post,
-                            current_user.id
-      )
+      @unread_replies = Reply.get_last_access(post, unread[0].updated_at, current_user.id)
     end
 
     @unread_replies.count
