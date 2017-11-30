@@ -8,4 +8,4 @@ Feature: Forum post
      When the user creates a new anonymous thread with the title "Assignment help" with the body "I need help"
      Then the current page should contain a new row containing the data:
      | Title           | Author    | Unread posts | Total number posts |
-     | Assignment help | anonymous | 1            | 1                  |
+     | Assignment help | anonymous | 0            | 1                  |
