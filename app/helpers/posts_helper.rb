@@ -5,10 +5,8 @@ module PostsHelper
   # list of the unread posts.
   @unread_replies
 
-  # The current post
-  @current_post
-
-  # Function to check if a post is unread
+  # Function to check if a post is unread.
+  # Uses @unread_replies set in controller
   def check_unread(reply)
     found = false
 
@@ -20,14 +18,9 @@ module PostsHelper
      found
   end
 
-  # Function to update when the user has read this post
-  # and replies. And store info about current post
-  def mark_as_read(post)
-    UnreadPost.update_record(post, current_user.id)
-  end
-
-  # Function to calculate amount of unread posts
-  def unread_posts(post)
+  # Function to calculate amount of unread posts.
+  # Similar to set_unread_posts in posts_controller.rb
+  def count_unread_posts(post)
 
     # Get the last known access of the user for this post
     unread = UnreadPost.where(post_id: post.id, user_id: current_user.id)

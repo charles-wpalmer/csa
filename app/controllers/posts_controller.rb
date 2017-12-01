@@ -13,6 +13,10 @@ class PostsController < ApplicationController
   # GET /posts/1
   def show
     @replies = Reply.get_by_post_id(params[:id])
+
+    # Set the @unread_replies, and mark post as read
+    set_unread_posts(@post)
+    mark_as_read(@post.id)
   end
 
   # GET /posts/new
@@ -76,7 +80,26 @@ class PostsController < ApplicationController
     @current_page = params[:page] || 1
   end
 
+  # Function to get the unread posts. Works by getting last access
+  # and getting replies based upon that time.
+  def set_unread_posts(post)
+
+    unread = UnreadPost.where(post_id: post.id, user_id: current_user.id)
+
+    if unread.count == 0
+      @unread_replies = Reply.where(post_id: post.id)
+    else
+      @unread_replies = Reply.get_last_access(post.id, unread[0].updated_at, current_user.id)
+    end
+  end
+
   private
+    # Function to update when the user has read a post
+    # and replies. And store info about current post
+    def mark_as_read(post)
+      UnreadPost.update_record(post, current_user.id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
