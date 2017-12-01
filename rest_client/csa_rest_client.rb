@@ -45,11 +45,27 @@ class CSARestClient
 
   def display_menu
     puts 'Enter option: '
+    puts '1. Display user options'
+    puts '2. Display user by ID'
+  end
+
+  def display_user_menu
+    puts 'Enter option: '
     puts '1. Display users'
     puts '2. Display user by ID'
     puts '3. Create new user'
     puts '4. Update user by ID'
     puts '5. Delete user by ID'
+    puts 'Q. Quit'
+  end
+
+  def display_post_menu
+    puts 'Enter option: '
+    puts '1. Display posts'
+    puts '2. Display post by ID'
+    puts '3. Create new post'
+    puts '4. Update post by ID'
+    puts '5. Delete post by ID'
     puts 'Q. Quit'
   end
 

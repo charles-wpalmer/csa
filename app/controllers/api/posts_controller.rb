@@ -41,21 +41,10 @@ class API::PostsController < API::ApplicationController
 
   # DELETE /posts/1.json
   def destroy
-
-    # Double make sure the logged in user is the author before deleting,
-    # should never be due to hiding delete button for other users
-    if current_user.id == @post.user_id
-
-      # Delete the post
-      @post.destroy
-
-      respond_to do |format|
-        format.json { head :no_content }
-      end
-
-    else
-      respond_to do |format|
-        format.json { head :no_content }
+    respond_to do |format|
+      format.json do
+        @post.destroy
+        head :no_content
       end
     end
   end

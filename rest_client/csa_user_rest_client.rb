@@ -8,30 +8,40 @@ require 'rest-client'
 require 'json'
 require 'base64'
 require 'io/console'
-class CSARestClient
+class CSAPostRestClient
 
   #@@DOMAIN = 'https://csa-heroku-chp38.herokuapp.com/'
   @@DOMAIN = 'http://localhost:3000'
 
+  @user
+  @pass
+  @logged_in = false
+
   def run_menu
     loop do
+      login
       display_menu
       option = STDIN.gets.chomp.upcase
       case option
         when '1'
           puts 'Displaying posts:'
+          puts '-------------------------------------------------------------'
           display_posts
         when '2'
           puts 'Displaying post:'
+          puts '-------------------------------------------------------------'
           display_post
         when '3'
           puts 'Creating post:'
+          puts '-------------------------------------------------------------'
           create_post
         when '4'
           puts 'Updating post:'
+          puts '-------------------------------------------------------------'
           update_post
         when '5'
           puts 'Deleting post:'
+          puts '-------------------------------------------------------------'
           delete_post
         when 'Q'
           break
@@ -43,27 +53,45 @@ class CSARestClient
 
   private
 
+  def login
+    if !@logged_in
+      puts '-------------------------------'
+      puts '|             Login:          |'
+      puts '-------------------------------'
+
+      print  'Username: '
+      @user = STDIN.gets.chomp
+
+      puts '-------------------------------'
+
+      print 'Password: '
+      @pass = STDIN.noecho(&:gets).chomp
+
+      @logged_in = true
+      puts ''
+    end
+  end
+
   def display_menu
-    puts 'Enter option: '
-    puts '1. Display posts'
-    puts '2. Display post by ID'
-    puts '3. Create new post'
-    puts '4. Update post by ID'
-    puts '5. Delete post by ID'
-    puts 'Q. Quit'
+    puts '-------------------------------'
+    puts '|        Enter option:        |'
+    puts '-------------------------------'
+    puts '|       1. Display posts      |'
+    puts '|    2. Display post by ID    |'
+    puts '|       3. Create new post    |'
+    puts '|      4. Update post by ID   |'
+    puts '|      5. Delete post by ID   |'
+    puts '|           Q. Quit           |'
+    puts '-------------------------------'
   end
 
   def display_posts
     begin
       response = RestClient.get "#{@@DOMAIN}/api/posts.json?all", authorization_hash
 
-      puts "Response code: #{response.code}"
-      puts "Response cookies:\n #{response.cookies}\n\n"
-      puts "Response headers:\n #{response.headers}\n\n"
-      puts "Response content:\n #{response.to_str}"
-
       js = JSON response.body
       js.each do |item_hash|
+        puts '-------------------------------------------------------------'
         item_hash.each do |k, v|
           puts "#{k}: #{v}"
         end
@@ -90,53 +118,22 @@ class CSARestClient
 
   def create_post
     begin
-      print "Surname: "
-      surname = STDIN.gets.chomp
-      print "Firstname: "
-      first_name = STDIN.gets.chomp
-      print "Phone: "
-      phone = STDIN.gets.chomp
-      print "graduating year: "
-      grad_year = STDIN.gets.chomp
-      print "Require job information? (y/n): "
-      jobs = STDIN.gets.chomp.upcase == 'Y' ? '1' : '0'
-      print "Email: "
-      email = STDIN.gets.chomp
-      print "Filename path: "
-      filename = STDIN.gets.chomp
-      print "Login: "
-      login = STDIN.gets.chomp
-      print "Password: "
-      password = STDIN.noecho(&:gets).chomp
-      print "\nPassword confirmation: "
-      password_confirmation = STDIN.noecho(&:gets).chomp
+      print "Post Title: "
+      title = STDIN.gets.chomp
+      print "Post Body: "
+      body = STDIN.gets.chomp
+      print "Anonymous (yes/no): "
+      anonymous = STDIN.gets.chomp
 
+      (anonymous == 'yes') ? anonymous = true : anonymous = false
 
-      # Rails will reject this unless you configure the cross_forgery_request check to
-      # a null_session in the receiving controller. This is because we are not sending
-      # an authenticity token. Rails by default will only send the token with forms /users/new and
-      # /users/1/edit and REST clients don't get those.
-      # We could perhaps arrange to send this on a previous
-      # request but we would then have to have an initial call (a kind of login perhaps).
-      # This will automatically send as a multi-part request because we are adding a
-      # File object.
       response = RestClient.post "#{@@DOMAIN}/api/posts.json",
-
                                  {
-                                     user: {
-                                         surname: surname,
-                                         firstname: first_name,
-                                         phone: phone,
-                                         grad_year: grad_year,
-                                         jobs: jobs,
-                                         email: email
-                                     },
-                                     user_detail: {
-                                         login: login,
-                                         password: password,
-                                         password_confirmation: password_confirmation
-                                     },
-                                     image_file: File.new(filename, 'r')
+                                     post: {
+                                         title: title,
+                                         text: body,
+                                         anonymous: anonymous
+                                     }
                                  }, authorization_hash
 
       if (response.code == 201)
@@ -152,18 +149,21 @@ class CSARestClient
     begin
       print "Enter the post ID: "
       id = STDIN.gets.chomp
-      response = RestClient.get "#{@@DOMAIN}/api/posts/#{id}.json"
+      response = RestClient.get "#{@@DOMAIN}/api/posts/#{id}.json", authorization_hash
 
       # Extract each element and ask the user if they'd like to change it
       js = JSON response.body
 
       result = {}
-      puts 'Hit return to keep value the same or else type new value:'
+      puts '-------------------------------------------------------------'
+      puts 'Hit return to keep value the same or else type new value:   |'
+      puts '-------------------------------------------------------------'
       js.each do |k, v|
-        unless k == 'id' || k == 'updated_at' || k == 'created_at'
-          print "#{k}[#{v}]: "
+        unless k == 'id' || k == 'updated_at' || k == 'created_at' || k == 'user_id' || k == 'post_count' || k == 'anonymous'
+          print "#{k} - Current: [#{v}]: "
           res = STDIN.gets.chomp
           result[k] = res.length > 0 ? res : v
+          puts '-------------------------------------------------------------'
         end
       end
 
@@ -194,11 +194,10 @@ class CSARestClient
   end
 
   def authorization_hash
-    {Authorization: "Basic #{Base64.strict_encode64('admin:taliesin')}"}
+    {Authorization: "Basic #{Base64.strict_encode64("#{@user}:#{@pass}")}"}
   end
-
 
 end
 
-client = CSARestClient.new
+client = CSAPostRestClient.new
 client.run_menu
