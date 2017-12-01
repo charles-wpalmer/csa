@@ -23,10 +23,7 @@ module PostsHelper
   # Function to update when the user has read this post
   # and replies. And store info about current post
   def mark_as_read(post)
-
-    @current_post = post
-
-    UnreadPost.update_record(@current_post, current_user.id)
+    UnreadPost.update_record(post, current_user.id)
   end
 
   # Function to calculate amount of unread posts
