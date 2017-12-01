@@ -2,6 +2,8 @@ class UnreadPost < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
+  # Function to add/update last access of a post
+  # for a specific user.
   def self.update_record(post_id, user_id)
     unread = UnreadPost.where(post_id: post_id, user_id: user_id)
 
