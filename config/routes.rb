@@ -2,10 +2,7 @@
 # @author Chris Loftus
 Rails.application.routes.draw do
 
-  # Only need to create unread_posts record
-  resources :unread_posts, only: [:new, :create]
-
-  # Same for replies, however need a path to a reply
+  # Only need to create, and show
   resources :replies, only: [:new, :create, :show]
 
   # Need all for posts
