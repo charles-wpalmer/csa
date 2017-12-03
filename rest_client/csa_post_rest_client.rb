@@ -3,6 +3,7 @@
 # the passwords should not be sent in plain text, but rather HTTPS used.
 # Also the password info should go in a config file and accessed as ebvironment
 # variables.
+# @author Chris Loftus
 # @author Charles Palmer
 require 'rest-client'
 require 'json'

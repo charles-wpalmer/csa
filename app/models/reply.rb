@@ -8,9 +8,6 @@ class Reply < ApplicationRecord
 
   belongs_to :parent, class_name: "Reply", optional: true
 
-  validates_presence_of :text
-  validates_presence_of :title
-
   # Function to get all the replies by
   # a given post_id, and where they are
   # the top level reply
