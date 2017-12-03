@@ -1,4 +1,14 @@
 <h1>Welcome to CS-Alumni News</h1>
 <p>
-  The is where the home page text will go.
+  <div class="latest-posts">
+    <h2>Latest Posts:</h2>
+    <% @posts.each do |post| %>
+      <div class="home-forum-item">
+        <%= image_for(post.user, :medium) %>
+        <p><%= post.user.firstname + ' ' + post.user.surname %></p>
+        <p><%= link_to post.title, post_path(post) %></p>
+      </div>
+
+    <% end %>
+  </div>
 </p>

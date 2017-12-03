@@ -7,7 +7,6 @@ class PostsController < ApplicationController
     @posts = Post.paginate(page: params[:page],
                   per_page: params[:per_page])
         .order("created_at DESC")
-
   end
 
   # GET /posts/1
