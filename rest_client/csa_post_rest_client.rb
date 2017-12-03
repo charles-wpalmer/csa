@@ -36,14 +36,6 @@ class CSAPostRestClient
           puts 'Creating post:'
           puts '-------------------------------------------------------------'
           create_post
-        when '4'
-          puts 'Updating post:'
-          puts '-------------------------------------------------------------'
-          update_post
-        when '5'
-          puts 'Deleting post:'
-          puts '-------------------------------------------------------------'
-          delete_post
         when 'Q'
           break
         else
@@ -80,8 +72,6 @@ class CSAPostRestClient
     puts '|       1. Display posts      |'
     puts '|    2. Display post by ID    |'
     puts '|       3. Create new post    |'
-    puts '|      4. Update post by ID   |'
-    puts '|      5. Delete post by ID   |'
     puts '|           Q. Quit           |'
     puts '-------------------------------'
   end
@@ -143,54 +133,6 @@ class CSAPostRestClient
       puts "URL for new resource: #{response.headers[:location]}"
     rescue => e
       puts STDERR, "Error accessing REST service. Error: #{e}"
-    end
-  end
-
-  def update_post
-    begin
-      print "Enter the post ID: "
-      id = STDIN.gets.chomp
-      response = RestClient.get "#{@@DOMAIN}/api/posts/#{id}.json", authorization_hash
-
-      # Extract each element and ask the user if they'd like to change it
-      js = JSON response.body
-
-      result = {}
-      puts '-------------------------------------------------------------'
-      puts 'Hit return to keep value the same or else type new value:   |'
-      puts '-------------------------------------------------------------'
-      js.each do |k, v|
-        unless k == 'id' || k == 'updated_at' || k == 'created_at' || k == 'user_id' || k == 'post_count' || k == 'anonymous'
-          print "#{k} - Current: [#{v}]: "
-          res = STDIN.gets.chomp
-          result[k] = res.length > 0 ? res : v
-          puts '-------------------------------------------------------------'
-        end
-      end
-
-      response = RestClient.put "#{@@DOMAIN}/api/posts/#{id}.json",
-                                {post: result}, authorization_hash
-
-      if (response.code == 201)
-        puts "Update successfully"
-      end
-    rescue => e
-      puts STDERR, "Error accessing REST service. Error: #{e}\n"
-    end
-
-  end
-
-  def delete_post
-    begin
-      print "Enter the post ID: "
-      id = STDIN.gets.chomp
-      response = RestClient.delete "#{@@DOMAIN}/api/posts/#{id}.json", authorization_hash
-
-      if (response.code == 204)
-        puts "Deleted successfully"
-      end
-    rescue => e
-      puts STDERR, "Error accessing REST service. Error: #{e}\n"
     end
   end
 
