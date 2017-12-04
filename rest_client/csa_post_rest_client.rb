@@ -11,8 +11,8 @@ require 'base64'
 require 'io/console'
 class CSAPostRestClient
 
-  @@DOMAIN = 'https://csa-heroku-chp38.herokuapp.com/'
-  #@@DOMAIN = 'http://localhost:3000'
+  #@@DOMAIN = 'https://csa-heroku-chp38.herokuapp.com/'
+  @@DOMAIN = 'http://localhost:3000'
 
   @user
   @pass
@@ -60,7 +60,7 @@ class CSAPostRestClient
       print 'Password: '
       @pass = STDIN.noecho(&:gets).chomp
 
-      @logged_in = true
+      authenticate
       puts ''
     end
   end
@@ -140,6 +140,23 @@ class CSAPostRestClient
     {Authorization: "Basic #{Base64.strict_encode64("#{@user}:#{@pass}")}"}
   end
 
+  # Authenticate the user login
+  def authenticate
+    response = RestClient.post "#{@@DOMAIN}/api/sessions.json",
+                               {
+                                       login: @user,
+                                       password: @pass,
+                                   }
+
+    if response.body == "true"
+      @logged_in = true
+    else
+      puts ''
+      puts 'Login failed'
+      puts ''
+      run_menu
+    end
+  end
 end
 
 client = CSAPostRestClient.new

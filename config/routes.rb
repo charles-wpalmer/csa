@@ -31,7 +31,8 @@ Rails.application.routes.draw do
       get 'search', on: :collection
     end
 
-    resources :posts, except: [:new, :edit]
+    resources :posts, except: [:new, :edit, :delete, :update, :destroy]
+    resources :sessions, only: [:create]
   end
 
   # No point allowing the editing or update of an existing broadcast
