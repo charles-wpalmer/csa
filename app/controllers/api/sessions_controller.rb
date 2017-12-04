@@ -1,7 +1,6 @@
 # Hanldes login from a json request
 # @author Charles Palmer
 class API::SessionsController < API::ApplicationController
-  
   skip_before_action :login_required
 
   # POST /session.json

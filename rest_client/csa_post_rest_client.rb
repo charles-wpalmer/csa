@@ -11,8 +11,8 @@ require 'base64'
 require 'io/console'
 class CSAPostRestClient
 
-  #@@DOMAIN = 'https://csa-heroku-chp38.herokuapp.com/'
-  @@DOMAIN = 'http://localhost:3000'
+  @@DOMAIN = 'https://csa-heroku-chp38.herokuapp.com/'
+  #@@DOMAIN = 'http://localhost:3000'
 
   @user
   @pass
