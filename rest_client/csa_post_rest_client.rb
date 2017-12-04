@@ -55,8 +55,6 @@ class CSAPostRestClient
       print  'Username: '
       @user = STDIN.gets.chomp
 
-      puts '-------------------------------'
-
       print 'Password: '
       @pass = STDIN.noecho(&:gets).chomp
 
@@ -143,10 +141,10 @@ class CSAPostRestClient
   # Authenticate the user login
   def authenticate
     response = RestClient.post "#{@@DOMAIN}/api/sessions.json",
-                               {
+                                {
                                        login: @user,
                                        password: @pass,
-                                   }
+                                }
 
     if response.body == "true"
       @logged_in = true
