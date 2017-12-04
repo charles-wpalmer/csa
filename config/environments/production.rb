@@ -95,4 +95,5 @@ Rails.application.configure do
       s3_region: ENV['S3_REGION_PRODUCTION'],
       bucket: ENV['S3_BUCKET_NAME_PRODUCTION']
   }
+
 end
