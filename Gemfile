@@ -11,7 +11,7 @@ gem 'will_paginate'
 gem 'paperclip'
 gem 'oauth'
 gem 'will_paginate'
-
+gem 'aws-sdk', '~> 2.3'
 gem 'json'
 gem 'rest-client'
 
