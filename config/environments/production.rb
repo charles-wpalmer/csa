@@ -89,6 +89,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Was having issues with s3_region, and the endpoint not being correct,
+  # so had to string concat the region with the hostname
   config.paperclip_defaults = {
       storage: :s3,
       s3_host_name: 's3.'+ENV['S3_REGION_PRODUCTION']+'.'+ENV['S3_HOST_NAME_PRODUCTION'],
