@@ -2,7 +2,11 @@
 <br>
 <div class="response">
   <p>
-    <%= @post.user.firstname + " " + @post.user.surname%>
+    <% if @post.anonymous %>
+        Anonymous
+    <% else %>
+        <%= @post.user.firstname + " " + @post.user.surname%>
+    <% end %>
   </p>
   <p>
     <%= display_date(@post.created_at) %>
