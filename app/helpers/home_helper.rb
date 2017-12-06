@@ -1,7 +1,11 @@
 module HomeHelper
 
-  def gen_image(user, size = :medium)
-    if user.image
+  # Function to generate the images for home page
+  # Recent forum posts.
+  # If user has image, and post isn't anonymous, display
+  # photo, else display default image.
+  def gen_image(user, size = :medium, anon = false)
+    if user.image && !anon
 
       user_image = user.image.photo.url(size)
       image_text = "Image of #{user.firstname} #{user.surname}"

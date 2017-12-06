@@ -6,8 +6,13 @@
 
       <% @posts.each do |post| %>
         <div class="home-forum-item">
-          <%= gen_image(post.user, :medium) %>
-          <p><%= post.user.firstname + ' ' + post.user.surname %></p>
+          <% if post.anonymous %>
+              <%= gen_image(post.user, :medium, post.anonymous) %>
+              <p>Anonymous</p>
+          <% else %>
+              <%= gen_image(post.user, :medium) %>
+              <p><%= post.user.firstname + ' ' + post.user.surname %></p>
+          <% end %>
           <p><%= link_to post.title, post_path(post) %></p>
         </div>
 
